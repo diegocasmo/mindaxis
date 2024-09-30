@@ -15,9 +15,16 @@ Turn goals into actionable roadmaps
    yarn install
    ```
 
-3. Start the development server:
+3. Set up the environment variables:
+   - Copy the `.env.example` file to `.env`:
+     ```
+     cp .env.example .env
+     ```
+   - Open the `.env` file and fill in the necessary environment variables.
+
+4. Start the development server:
    ```
-   yarn start
+   yarn dev
    ```
 
 The application should now be running on `http://localhost:3000`.
