@@ -6,7 +6,7 @@ Turn goals into actionable roadmaps
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/mindaxis.git
+   git clone git@github.com:diegocasmo/mindaxis.git
    cd mindaxis
    ```
 
