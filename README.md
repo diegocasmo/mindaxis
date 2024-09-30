@@ -5,10 +5,6 @@ Turn goals into actionable roadmaps
 ## Installation
 
 1. Clone the repository:
-   ```
-   git clone git@github.com:diegocasmo/mindaxis.git
-   cd mindaxis
-   ```
 
 2. Install dependencies:
    ```
@@ -20,11 +16,11 @@ Turn goals into actionable roadmaps
      ```
      cp .env.example .env
      ```
-   - Open the `.env` file and fill in the necessary environment variables.
+   - Open the `.env` file and fill in the necessary environment variables
 
 4. Start the development server:
    ```
    yarn dev
    ```
 
-The application should now be running on `http://localhost:3000`.
+The application should now be running on `http://localhost:3000` :rocket:
