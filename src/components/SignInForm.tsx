@@ -43,24 +43,41 @@ export function SignInForm() {
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label htmlFor="email">Email Address</label>
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-foreground"
+        >
+          Email Address
+        </label>
         <input
           id="email"
           type="email"
           placeholder="Enter your email"
           {...register("email")}
+          className={`w-full px-3 py-2 bg-input text-foreground border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary ${
+            errors.email ? "border-destructive" : "border-input"
+          }`}
           aria-invalid={errors.email ? "true" : "false"}
           aria-describedby={errors.email ? "email-error" : undefined}
         />
         {errors.email && (
-          <p id="email-error" role="alert">
+          <div
+            id="email-error"
+            className="p-3 mt-2 text-sm font-medium text-white bg-destructive/50 rounded-md"
+            role="alert"
+          >
             {errors.email.message}
-          </p>
+          </div>
         )}
       </div>
-      <button type="submit" disabled={isPending} aria-busy={isPending}>
+      <button
+        type="submit"
+        disabled={isPending}
+        className="w-full px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
+        aria-busy={isPending}
+      >
         {isPending ? "Submitting..." : "Continue with email"}
       </button>
     </form>
