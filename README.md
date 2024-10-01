@@ -1,6 +1,6 @@
 # MindAxis
 
-Turn goals into actionable roadmaps
+Turn goals into actionable roadmaps.
 
 ## Installation
 
