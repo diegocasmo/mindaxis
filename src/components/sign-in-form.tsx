@@ -6,7 +6,7 @@ import { emailSchema, type EmailSchema } from "@/lib/schemas/signIn";
 import { setFormErrors } from "@/lib/formUtils";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { signInAction } from "@/app/actions/signInAction";
+import { signInAction } from "@/app/actions/sign-in-action";
 import {
   Form,
   FormField,
