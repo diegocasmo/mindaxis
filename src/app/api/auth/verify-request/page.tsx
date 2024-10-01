@@ -1,18 +1,38 @@
 import Link from "next/link";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Mail } from "lucide-react";
 
-export default async function VerifyRequest() {
+export default function CheckEmail() {
   return (
-    <div className="w-full max-w-md p-6 bg-card text-card-foreground rounded-lg shadow-md space-y-4 text-center">
-      <h1 className="text-2xl font-bold text-foreground">Check your email</h1>
-      <p className="text-muted-foreground">
-        A sign in link has been sent to your email address.
-      </p>
-      <Link
-        href="/"
-        className="inline-block mt-4 text-sm font-medium text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-      >
-        Go back to the home page
-      </Link>
-    </div>
+    <Card className="w-full max-w-md border-muted">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-center">
+          Check your email
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Alert variant="default" className="border-muted bg-muted/50">
+          <Mail className="h-4 w-4 text-muted-foreground" />
+          <AlertDescription className="text-foreground">
+            We&apos;ve sent a sign-in link to your email address. Please check
+            your inbox and click the link to continue.
+          </AlertDescription>
+        </Alert>
+      </CardContent>
+
+      <CardFooter className="flex justify-center">
+        <Button asChild>
+          <Link href="/">Return to home page</Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

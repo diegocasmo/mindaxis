@@ -7,21 +7,29 @@ import { setFormErrors } from "@/lib/formUtils";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { signInAction } from "@/app/actions/signInAction";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export function SignInForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<EmailSchema>({
+  const form = useForm<EmailSchema>({
     resolver: zodResolver(emailSchema),
+    defaultValues: {
+      email: "",
+    },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = form.handleSubmit((data) => {
     startTransition(async () => {
       try {
         const formData = new FormData();
@@ -31,10 +39,10 @@ export function SignInForm() {
         if (result.success) {
           router.push("/api/auth/verify-request");
         } else {
-          setFormErrors(setError, result.errors);
+          setFormErrors(form.setError, result.errors);
         }
       } catch {
-        setError("email", {
+        form.setError("email", {
           type: "manual",
           message: "An unexpected error occurred. Please try again.",
         });
@@ -43,43 +51,27 @@ export function SignInForm() {
   });
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-foreground"
-        >
-          Email Address
-        </label>
-        <input
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-          {...register("email")}
-          className={`w-full px-3 py-2 bg-input text-foreground border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary ${
-            errors.email ? "border-destructive" : "border-input"
-          }`}
-          aria-invalid={errors.email ? "true" : "false"}
-          aria-describedby={errors.email ? "email-error" : undefined}
+    <Form {...form}>
+      <form onSubmit={onSubmit} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="Enter your email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {errors.email && (
-          <div
-            id="email-error"
-            className="p-3 mt-2 text-sm font-medium text-white bg-destructive/50 rounded-md"
-            role="alert"
-          >
-            {errors.email.message}
-          </div>
-        )}
-      </div>
-      <button
-        type="submit"
-        disabled={isPending}
-        className="w-full px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
-        aria-busy={isPending}
-      >
-        {isPending ? "Submitting..." : "Continue with email"}
-      </button>
-    </form>
+        <div className="flex justify-center">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Submitting..." : "Continue with email"}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }

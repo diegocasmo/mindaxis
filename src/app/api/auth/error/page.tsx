@@ -1,18 +1,37 @@
 import Link from "next/link";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle } from "lucide-react";
 
-export default async function Error() {
+export default function Error() {
   return (
-    <div className="w-full max-w-md p-6 bg-card text-card-foreground rounded-lg shadow-md space-y-4 text-center">
-      <h1 className="text-2xl font-bold text-destructive">
-        There was an error
-      </h1>
-      <p className="text-muted-foreground">Please try again later.</p>
-      <Link
-        href="/"
-        className="inline-block mt-4 text-sm font-medium text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-      >
-        Go back to the home page
-      </Link>
-    </div>
+    <Card className="w-full max-w-md border-muted">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-center">
+          Oops! Something went wrong
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Alert variant="default" className="border-muted bg-muted/50">
+          <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+          <AlertDescription className="text-foreground">
+            We encountered an unexpected issue. Our team has been notified and
+            is working on a solution.
+          </AlertDescription>
+        </Alert>
+      </CardContent>
+      <CardFooter className="flex justify-center">
+        <Button asChild>
+          <Link href="/">Return to home page</Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

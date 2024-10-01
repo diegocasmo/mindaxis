@@ -1,20 +1,33 @@
 import { SignInForm } from "@/components/SignInForm";
 import { auth } from "@/lib/auth";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export default async function Home() {
   const session = await auth();
 
   return (
-    <div className="w-full max-w-md p-6 bg-card text-card-foreground rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-2 text-center">MindAxis</h1>
-      <h2 className="text-muted-foreground mb-6 text-center">
-        Turn goals into actionable roadmaps
-      </h2>
-      {session && session.user ? (
-        <p className="text-center">Welcome, {session.user.email}!</p>
-      ) : (
-        <SignInForm />
-      )}
-    </div>
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle className="text-3xl font-bold text-center">
+          MindAxis
+        </CardTitle>
+        <CardDescription className="text-center">
+          Turn goals into actionable roadmaps
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {session && session.user ? (
+          <p className="text-center">Welcome, {session.user.email}!</p>
+        ) : (
+          <SignInForm />
+        )}
+      </CardContent>
+    </Card>
   );
 }
