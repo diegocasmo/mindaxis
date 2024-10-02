@@ -1,6 +1,4 @@
 import { auth } from "@/lib/auth";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -9,9 +7,10 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { SignOutForm } from "@/components/sign-out-form";
+import type { AuthenticatedSession } from "@/types";
 
 export default async function Dashboard() {
-  const session = await auth();
+  const session = (await auth()) as AuthenticatedSession;
 
   return (
     <Card className="w-full max-w-md">
@@ -24,16 +23,10 @@ export default async function Dashboard() {
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-center">
-        {session && session.user ? (
-          <div className="text-center space-y-4">
-            <p>Welcome, {session.user.email}!</p>
-            <SignOutForm />
-          </div>
-        ) : (
-          <Button asChild>
-            <Link href="/auth/sign-in">Sign in</Link>
-          </Button>
-        )}
+        <div className="text-center space-y-4">
+          <p>Welcome, {session.user.email}!</p>
+          <SignOutForm />
+        </div>
       </CardFooter>
     </Card>
   );

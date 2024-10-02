@@ -16,7 +16,7 @@ export function SignOutForm() {
     startTransition(async () => {
       try {
         await signOut({ redirect: false });
-        router.refresh();
+        router.push("/");
       } catch (error) {
         console.error("Sign out error:", error);
         setError("Sign out failed. Please try again.");

@@ -30,7 +30,7 @@ export default function CheckEmail() {
 
       <CardFooter className="flex justify-center">
         <Button asChild>
-          <Link href="/">Return to home page</Link>
+          <Link href="/">Go back to home page</Link>
         </Button>
       </CardFooter>
     </Card>
