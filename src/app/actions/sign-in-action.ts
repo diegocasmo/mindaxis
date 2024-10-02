@@ -2,7 +2,8 @@
 
 import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
 import { signIn } from "@/lib/auth";
-import { parseZodErrors, type FieldErrors } from "@/lib/form-utils";
+import { parseZodErrors } from "@/lib/form-utils";
+import type { FieldErrors } from "react-hook-form";
 
 type SignInResult =
   | { success: true }
