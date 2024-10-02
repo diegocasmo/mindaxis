@@ -6,16 +6,23 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
   const { pathname } = request.nextUrl;
 
-  const isDashboardRoute = pathname.startsWith("/dashboard");
-  const isPublicRoute = ["/"].includes(pathname);
+  const isAuthenticatedRoute = [
+    "/dashboard",
+    "/api/auth/providers",
+    "/auth/sign-out",
+  ].includes(pathname);
+
+  const isPublicRoute = ["/", "/api/auth/csrf", "/api/auth/session"].includes(
+    pathname
+  );
 
   // Redirect UNauthenticated users trying to access dashboard
-  if (isDashboardRoute && !session) {
+  if (isAuthenticatedRoute && !session) {
     return NextResponse.redirect(new URL("/auth/sign-in", request.url));
   }
 
   // Redirect authenticated users trying to access non-dashboard, non-public routes
-  if (!isPublicRoute && !isDashboardRoute && session) {
+  if (!isPublicRoute && !isAuthenticatedRoute && session) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -23,5 +30,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
