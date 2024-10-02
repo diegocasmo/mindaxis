@@ -19,7 +19,10 @@ export default function Error() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Alert variant="default" className="border-muted bg-muted/50">
+        <Alert
+          variant="destructive"
+          className="border-destructive/50 bg-destructive/20"
+        >
           <AlertTriangle className="h-4 w-4 text-muted-foreground" />
           <AlertDescription className="text-foreground">
             We encountered an unexpected issue. Our team has been notified and
