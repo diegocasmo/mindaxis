@@ -2,8 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { emailSchema, type EmailSchema } from "@/lib/schemas/signIn";
-import { setFormErrors } from "@/lib/formUtils";
+import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
+import { setFormErrors } from "@/lib/form-utils";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { signInAction } from "@/app/actions/sign-in-action";
@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -62,12 +63,15 @@ export function SignInForm() {
               <FormControl>
                 <Input type="email" placeholder="Enter your email" {...field} />
               </FormControl>
+              <FormDescription>
+                We'll send you a magic link to sign in.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="flex justify-center">
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending || !form.formState.isValid}>
             {isPending ? "Submitting..." : "Continue with email"}
           </Button>
         </div>

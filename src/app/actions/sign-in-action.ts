@@ -1,8 +1,8 @@
 "use server";
 
-import { emailSchema, type EmailSchema } from "@/lib/schemas/signIn";
+import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
 import { signIn } from "@/lib/auth";
-import { parseZodErrors, type FieldErrors } from "@/lib/formUtils";
+import { parseZodErrors, type FieldErrors } from "@/lib/form-utils";
 
 type SignInResult =
   | { success: true }
