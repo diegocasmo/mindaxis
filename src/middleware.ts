@@ -5,7 +5,6 @@ import { auth } from "@/lib/auth";
 export async function middleware(request: NextRequest) {
   const session = await auth();
   const { pathname } = request.nextUrl;
-  console.log(`pathname: ${pathname}`);
 
   const isDashboardRoute = pathname.startsWith("/dashboard");
   const isPublicRoute = ["/"].includes(pathname);
