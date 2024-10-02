@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { SignOutButton } from "@/components/sign-out-button";
 
 export default async function Home() {
   const session = await auth();
@@ -23,7 +24,10 @@ export default async function Home() {
       </CardHeader>
       <CardContent>
         {session && session.user ? (
-          <p className="text-center">Welcome, {session.user.email}!</p>
+          <div className="text-center space-y-4">
+            <p>Welcome, {session.user.email}!</p>
+            <SignOutButton />
+          </div>
         ) : (
           <SignInForm />
         )}
