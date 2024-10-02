@@ -64,7 +64,7 @@ export function SignInForm() {
                 <Input type="email" placeholder="Enter your email" {...field} />
               </FormControl>
               <FormDescription>
-                We'll send you a magic link to sign in.
+                We&apos;ll send you a magic link to sign in.
               </FormDescription>
               <FormMessage />
             </FormItem>
