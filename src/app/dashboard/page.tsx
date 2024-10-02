@@ -8,8 +8,9 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
+import { SignOutForm } from "@/components/sign-out-form";
 
-export default async function Home() {
+export default async function Dashboard() {
   const session = await auth();
 
   return (
@@ -24,9 +25,10 @@ export default async function Home() {
       </CardHeader>
       <CardFooter className="flex justify-center">
         {session && session.user ? (
-          <Button asChild>
-            <Link href="/dashboard">Go to dashboard</Link>
-          </Button>
+          <div className="text-center space-y-4">
+            <p>Welcome, {session.user.email}!</p>
+            <SignOutForm />
+          </div>
         ) : (
           <Button asChild>
             <Link href="/auth/sign-in">Sign in</Link>

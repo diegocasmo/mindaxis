@@ -42,7 +42,8 @@ export function SignInForm() {
         } else {
           setFormErrors(form.setError, result.errors);
         }
-      } catch {
+      } catch (error) {
+        console.error("Sign in error:", error);
         form.setError("email", {
           type: "manual",
           message: "An unexpected error occurred. Please try again.",
