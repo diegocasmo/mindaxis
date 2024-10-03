@@ -2,11 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 export function SignOutForm() {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -16,7 +14,8 @@ export function SignOutForm() {
     startTransition(async () => {
       try {
         await signOut({ redirect: false });
-        router.push("/");
+        // Perform a hard refresh by redirecting to the root URL
+        window.location.href = "/";
       } catch (error) {
         console.error("Sign out error:", error);
         setError("Sign out failed. Please try again.");
