@@ -25,13 +25,18 @@ export function SignOutForm() {
   };
 
   return (
-    <div className="space-y-2">
-      <div className="flex justify-center">
-        <Button onClick={handleSignOut} disabled={isPending}>
-          {isPending ? "Signing out..." : "Sign out"}
-        </Button>
-      </div>
-      {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+    <div className="w-full">
+      <Button
+        onClick={handleSignOut}
+        disabled={isPending}
+        variant="ghost"
+        className="w-full justify-start"
+      >
+        {isPending ? "Signing out..." : "Sign out"}
+      </Button>
+      {error && (
+        <p className="text-sm font-medium text-destructive mt-2">{error}</p>
+      )}
     </div>
   );
 }
