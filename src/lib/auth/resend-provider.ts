@@ -1,21 +1,13 @@
-import { Provider } from "next-auth/providers";
+import type { EmailConfig } from "next-auth/providers/email";
 import Resend from "next-auth/providers/resend";
 
-interface SendVerificationRequestParams {
-  identifier: string;
-  url: string;
-  provider: Provider;
-}
+const sendVerificationRequestDev: EmailConfig["sendVerificationRequest"] =
+  async ({ identifier, url, provider }) => {
+    const { host } = new URL(url);
 
-export const sendVerificationRequestDev = async ({
-  identifier,
-  url,
-}: SendVerificationRequestParams): Promise<void> => {
-  const { host } = new URL(url);
-
-  console.log(`
+    console.log(`
 ----------------------------------
-From: ${process.env.EMAIL_FROM}
+From: ${provider.from}
 To: ${identifier}
 Subject: Sign in to ${host}
 
@@ -25,7 +17,7 @@ ${url}
 
 ----------------------------------
   `);
-};
+  };
 
 export const getResendProvider = () => {
   if (!process.env.EMAIL_FROM) {
