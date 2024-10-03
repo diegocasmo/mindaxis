@@ -21,12 +21,12 @@ export async function middleware(request: NextRequest) {
 
   // Routes for unauthenticated users
   if (
-    ["/auth/sign-in", "/auth/error", "/auth/verify-request"].includes(pathname)
+    ["/auth/sign-in", "/auth/error", "/auth/verify-request"].includes(
+      pathname
+    ) &&
+    session
   ) {
-    if (session) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-    return NextResponse.next();
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   // For any other routes, allow the request to proceed
