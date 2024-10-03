@@ -1,14 +1,13 @@
 import { MainNav } from "@/components/main-nav";
 import { auth } from "@/lib/auth";
 import { SessionProvider } from "next-auth/react";
-import type { AuthenticatedSession } from "@/types";
 
 export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = (await auth()) as AuthenticatedSession;
+  const session = await auth();
 
   return (
     <SessionProvider session={session}>
