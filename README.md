@@ -16,11 +16,20 @@ Turn goals into actionable roadmaps.
      ```
      cp .env.example .env
      ```
-   - Open the `.env` file and fill in the necessary environment variables
+   - Open the `.env` file and fill in the necessary environment variables, including your PostgreSQL database URL
 
-4. Start the development server:
+4. Set up Prisma and the database:
+   - Generate Prisma client:
+     ```
+     npx prisma generate
+     ```
+   - Apply existing migrations to your database:
+     ```
+     npx prisma migrate deploy
+     ```
+   This command will apply all existing migrations to your database, bringing it up to date with the current schema.
+
+5. Start the development server:
    ```
    yarn dev
    ```
-
-The application should now be running on `http://localhost:3000` :rocket:
