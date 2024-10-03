@@ -1,16 +1,13 @@
 import NextAuth from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import Resend from "next-auth/providers/resend";
 import { createDefaultOrganization } from "@/lib/services/create-default-organization";
+import { getResendProvider } from "@/lib/auth/resend-provider";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
-  providers: [
-    Resend({
-      from: process.env.EMAIL_FROM,
-    }),
-  ],
+  providers: [getResendProvider()],
   session: {
     strategy: "jwt",
   },
@@ -21,12 +18,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     error: "/auth/error",
   },
   events: {
-    // Create a default organization for users signing in with the resend
-    // provider, if they don't already have one
     signIn: async ({ user, account }) => {
       if (user.id && user.email && account?.provider === "resend") {
         await createDefaultOrganization(user.id, user.email);
       }
     },
   },
-});
+};
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
