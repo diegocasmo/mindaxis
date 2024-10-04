@@ -62,7 +62,12 @@ export function SignInForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="Enter your email" {...field} />
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  autoFocus
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 We&apos;ll send you a magic link to sign in.

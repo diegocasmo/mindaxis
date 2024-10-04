@@ -82,7 +82,11 @@ export function CreateProjectForm() {
                   <FormItem>
                     <FormLabel>Project Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter project name" {...field} />
+                      <Input
+                        placeholder="Enter project name"
+                        autoFocus
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
