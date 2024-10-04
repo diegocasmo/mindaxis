@@ -21,13 +21,22 @@ Turn goals into actionable roadmaps.
 4. Set up Prisma and the database:
    - Generate Prisma client:
      ```
-     npx prisma generate
+     yarn prisma generate
+     ```
+   - Create the database (if not already done):
+     ```
+     yarn prisma db push
      ```
    - Apply existing migrations to your database:
      ```
-     npx prisma migrate deploy
+     yarn prisma migrate deploy
      ```
-   This command will apply all existing migrations to your database, bringing it up to date with the current schema.
+   - Seed the database with initial data:
+     ```
+     yarn prisma db seed
+     ```
+
+   These commands will set up your database schema, apply all existing migrations, and populate the database with seed data.
 
 5. Start the development server:
    ```
