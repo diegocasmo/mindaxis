@@ -1,21 +1,30 @@
 import { prisma } from "@/lib/prisma";
+import { Organization } from "@prisma/client";
 
 function getOrganizationName(email: string): string {
   const [name] = email.split("@");
   return name.charAt(0).toUpperCase() + name.slice(1) + "'s Organization";
 }
 
-export async function createDefaultOrganization(userId: string, email: string) {
+type CreateDefaultOrganizationParams = {
+  userId: string;
+  email: string;
+};
+
+export async function createDefaultOrganization({
+  userId,
+  email,
+}: CreateDefaultOrganizationParams): Promise<Organization | undefined> {
   try {
-    return await prisma.$transaction(async (tx) => {
-      const existingUserOrg = await tx.userOrganization.findFirst({
-        where: { userId },
-      });
+    const existingUserOrg = await prisma.userOrganization.findFirst({
+      where: { userId },
+    });
 
-      if (existingUserOrg) {
-        return; // User already has an organization, do nothing
-      }
+    // User already has an organization, do nothing
+    if (existingUserOrg) return;
 
+    // Create the default organization
+    return prisma.$transaction(async (tx) => {
       const newOrg = await tx.organization.create({
         data: {
           name: getOrganizationName(email),
@@ -32,6 +41,6 @@ export async function createDefaultOrganization(userId: string, email: string) {
     });
   } catch (error) {
     console.error("Error creating default organization:", error);
-    throw error; // Re-throw the error to be handled by the caller
+    throw error;
   }
 }

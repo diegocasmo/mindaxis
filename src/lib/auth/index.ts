@@ -20,7 +20,7 @@ export const authOptions: NextAuthConfig = {
   events: {
     signIn: async ({ user, account }) => {
       if (user.id && user.email && account?.provider === "resend") {
-        await createDefaultOrganization(user.id, user.email);
+        await createDefaultOrganization({ userId: user.id, email: user.email });
       }
     },
   },
