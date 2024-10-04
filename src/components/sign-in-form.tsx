@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
-import { setFormErrors } from "@/lib/form-utils";
+import { setFormErrors } from "@/lib/utils/form";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { signInAction } from "@/app/actions/sign-in-action";
