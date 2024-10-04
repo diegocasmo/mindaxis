@@ -1,21 +1,12 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { CreateProjectForm } from "@/components/create-project-form";
 
 export default async function Dashboard() {
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle className="text-3xl font-bold text-center">
-          MindAxis
-        </CardTitle>
-        <CardDescription className="text-center">
-          Turn goals into actionable roadmaps
-        </CardDescription>
-      </CardHeader>
-    </Card>
+    <div>
+      <h1 className="text-2xl font-semibold mb-6">Your Projects</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <CreateProjectForm />
+      </div>
+    </div>
   );
 }

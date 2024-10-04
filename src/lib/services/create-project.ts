@@ -1,4 +1,5 @@
-import { Project, UserProjectRole } from "@prisma/client";
+import type { Project } from "@prisma/client";
+import { UserProjectRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 type CreateProjectParams = {
