@@ -19,7 +19,11 @@ export async function signInAction(formData: FormData): Promise<SignInResult> {
   }
 
   try {
-    await signIn("resend", { email: result.data.email, redirect: false });
+    await signIn("resend", {
+      email: result.data.email,
+      redirect: false,
+      redirectTo: "/dashboard",
+    });
     return { success: true };
   } catch {
     return {
