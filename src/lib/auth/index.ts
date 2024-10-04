@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import type { NextAuthConfig, Session, User } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import { createDefaultOrganization } from "@/lib/services/create-default-organization";
+import { findOrCreateDefaultOrganization } from "@/lib/services/find-or-create-default-organization";
 import { getResendProvider } from "@/lib/auth/resend-provider";
 import type { JWT } from "next-auth/jwt";
 
@@ -44,7 +44,7 @@ export const authOptions: NextAuthConfig = {
   events: {
     signIn: async ({ user, account }) => {
       if (user.id && user.email && account?.provider === "resend") {
-        await createDefaultOrganization({ userId: user.id, email: user.email });
+        await findOrCreateDefaultOrganization(user.id);
       }
     },
   },

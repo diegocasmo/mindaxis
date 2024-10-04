@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
-import { createDefaultOrganization } from "@/lib/services/create-default-organization";
+import { findOrCreateDefaultOrganization } from "@/lib/services/find-or-create-default-organization";
 import { createProject } from "@/lib/services/create-project";
 
 const prisma = new PrismaClient();
@@ -15,10 +15,7 @@ async function main() {
   });
 
   // Create the default organization for the user
-  const organization = await createDefaultOrganization({
-    userId: user.id,
-    email: user.email,
-  });
+  const organization = await findOrCreateDefaultOrganization(user.id);
 
   if (!organization) {
     throw new Error("Failed to create default organization");
