@@ -1,5 +1,6 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { z } from "zod";
+import { createZodError } from "@/lib/utils/form";
 
 type PrismaErrorMapping = {
   [key: string]: (error: PrismaClientKnownRequestError) => z.ZodError;
@@ -14,32 +15,12 @@ const defaultPrismaErrorMapping: PrismaErrorMapping = {
   },
 };
 
-function createZodError(
-  message: string,
-  path: (string | number)[] = []
-): z.ZodError {
-  return new z.ZodError([
-    {
-      code: z.ZodIssueCode.custom,
-      path,
-      message,
-    },
-  ]);
-}
-
-export function handlePrismaError(
-  error: unknown,
-  customMapping: PrismaErrorMapping = {}
-): z.ZodError {
+export function transformPrismaErrorToZodError(
+  error: unknown
+): z.ZodError | null {
   if (error instanceof PrismaClientKnownRequestError) {
-    const errorHandler =
-      customMapping[error.code] || defaultPrismaErrorMapping[error.code];
-    if (errorHandler) {
-      return errorHandler(error);
-    }
+    const errorHandler = defaultPrismaErrorMapping[error.code];
+    return errorHandler ? errorHandler(error) : null;
   }
-
-  return createZodError("An unexpected error occurred. Please try again.");
+  return null;
 }
-
-export { createZodError };

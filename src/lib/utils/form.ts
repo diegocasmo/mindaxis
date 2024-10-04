@@ -1,4 +1,4 @@
-import type { z } from "zod";
+import { z } from "zod";
 import type {
   FieldErrors,
   FieldValues,
@@ -20,9 +20,10 @@ export function setFormErrors<T extends FieldValues>(
 }
 
 export function parseZodErrors<T extends z.ZodType>(
-  result: z.SafeParseError<z.infer<T>>
+  result: z.SafeParseError<z.infer<T>> | z.ZodError
 ): FieldErrors<z.infer<T>> {
-  return result.error.issues.reduce((acc, issue) => {
+  const zodError = result instanceof z.ZodError ? result : result.error;
+  return zodError.issues.reduce((acc, issue) => {
     const path = issue.path.join(".");
     if (path) {
       (acc as Record<string, FieldError>)[path] = {
@@ -32,4 +33,17 @@ export function parseZodErrors<T extends z.ZodType>(
     }
     return acc;
   }, {} as FieldErrors<z.infer<T>>);
+}
+
+export function createZodError(
+  message: string,
+  path: (string | number)[] = []
+): z.ZodError {
+  return new z.ZodError([
+    {
+      code: z.ZodIssueCode.custom,
+      path,
+      message,
+    },
+  ]);
 }

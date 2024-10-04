@@ -5,11 +5,11 @@ import {
   type CreateProjectSchema,
 } from "@/lib/schemas/create-project";
 import { createProject } from "@/lib/services/create-project";
-import { parseZodErrors } from "@/lib/utils/form";
+import { parseZodErrors, createZodError } from "@/lib/utils/form";
 import type { FieldErrors } from "react-hook-form";
 import { auth } from "@/lib/auth";
 import type { Project } from "@prisma/client";
-import { handlePrismaError } from "@/lib/utils/prisma-error-handler";
+import { transformPrismaErrorToZodError } from "@/lib/utils/prisma-error-handler";
 
 type ActionResult<T> =
   | { success: true; data: T }
@@ -41,12 +41,15 @@ export async function createProjectAction(
   } catch (error) {
     console.error("Error creating project:", error);
 
+    const zodError =
+      transformPrismaErrorToZodError(error) ||
+      createZodError("An unexpected error occurred. Please try again.", [
+        "name",
+      ]);
+
     return {
       success: false,
-      errors: parseZodErrors({
-        success: false,
-        error: handlePrismaError(error),
-      }),
+      errors: parseZodErrors(zodError),
     };
   }
 }

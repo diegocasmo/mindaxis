@@ -2,7 +2,7 @@
 
 import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
 import { signIn } from "@/lib/auth";
-import { parseZodErrors } from "@/lib/utils/form";
+import { parseZodErrors, createZodError } from "@/lib/utils/form";
 import type { FieldErrors } from "react-hook-form";
 
 type SignInResult =
@@ -25,15 +25,15 @@ export async function signInAction(formData: FormData): Promise<SignInResult> {
       redirectTo: "/dashboard",
     });
     return { success: true };
-  } catch {
+  } catch (error) {
+    console.error("Error signing in :", error);
+    const zodError = createZodError("Failed to sign in. Please try again", [
+      "email",
+    ]);
+
     return {
       success: false,
-      errors: {
-        email: {
-          type: "manual",
-          message: "Failed to sign in. Please try again.",
-        },
-      },
+      errors: parseZodErrors(zodError),
     };
   }
 }
