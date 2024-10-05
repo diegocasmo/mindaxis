@@ -23,15 +23,10 @@ Turn goals into actionable roadmaps.
      ```
      yarn prisma generate
      ```
-   - Create the database (if not already done):
+   - Run migrations and seed initial data:
      ```
-     yarn prisma db push
+     yarn prisma migrate dev
      ```
-   - Seed the database with initial data:
-     ```
-     yarn prisma db seed
-     ```
-
    These commands will set up your database schema, apply all existing migrations, and populate the database with seed data.
 
 5. Start the development server:
