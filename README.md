@@ -27,10 +27,6 @@ Turn goals into actionable roadmaps.
      ```
      yarn prisma db push
      ```
-   - Apply existing migrations to your database:
-     ```
-     yarn prisma migrate deploy
-     ```
    - Seed the database with initial data:
      ```
      yarn prisma db seed
