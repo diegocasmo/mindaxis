@@ -22,10 +22,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
+import { useQueryClient } from "@tanstack/react-query";
+import { PROJECTS_LIST_QUERY_KEY } from "@/features/list-projects/hooks/use-projects";
 
 export function CreateProjectForm() {
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
   const [isPending, startTransition] = useTransition();
+  const queryClient = useQueryClient();
 
   const form = useForm<CreateProjectSchema>({
     resolver: zodResolver(createProjectSchema),
@@ -42,9 +45,11 @@ export function CreateProjectForm() {
         const result = await createProjectAction(formData);
 
         if (result.success) {
-          console.log("Project created:", result);
           setIsFormVisible(false);
           form.reset();
+          await queryClient.invalidateQueries({
+            queryKey: PROJECTS_LIST_QUERY_KEY,
+          });
         } else {
           setFormErrors(form.setError, result.errors);
         }
@@ -59,7 +64,7 @@ export function CreateProjectForm() {
   });
 
   return (
-    <Card ref={cardRef} className="w-full max-w-md">
+    <Card ref={cardRef} className="w-full">
       <CardContent className="p-6">
         {!isFormVisible ? (
           <Button
@@ -67,7 +72,7 @@ export function CreateProjectForm() {
               setIsFormVisible(true);
               form.reset();
             }}
-            className="w-full h-32 flex flex-col items-center justify-center"
+            className="w-full h-full flex flex-col items-center justify-center"
           >
             <Plus className="w-8 h-8 mb-2" />
             <span>Create New Project</span>

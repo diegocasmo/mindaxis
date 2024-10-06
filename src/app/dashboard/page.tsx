@@ -1,12 +1,27 @@
-import { CreateProjectForm } from "@/components/create-project-form";
+import { Suspense } from "react";
+import { ProjectList } from "@/features/list-projects/components/project-list";
+import { listProjectsAction } from "@/app/actions/list-projects-action";
 
-export default async function Dashboard() {
+export default function Dashboard() {
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-6">Your Projects</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <CreateProjectForm />
-      </div>
+      <Suspense fallback={<div>Loading projects...</div>}>
+        <ProjectListContent />
+      </Suspense>
     </div>
   );
+}
+
+async function ProjectListContent() {
+  try {
+    const initialProjects = await listProjectsAction({ page: 1, perPage: 20 });
+    return <ProjectList initialProjects={initialProjects} />;
+  } catch (error) {
+    return (
+      <p className="text-red-500">
+        Error loading projects. Please try again later.
+      </p>
+    );
+  }
 }
