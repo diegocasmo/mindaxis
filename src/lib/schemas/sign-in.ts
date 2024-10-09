@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-export const emailSchema = z.object({
+export const signInSchema = z.object({
   email: z
     .string()
     .email("Invalid email address")
     .transform((v) => v.trim()),
 });
 
-export type EmailSchema = z.infer<typeof emailSchema>;
+export type SignInSchema = z.infer<typeof signInSchema>;

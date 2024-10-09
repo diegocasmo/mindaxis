@@ -1,16 +1,16 @@
 "use server";
 
-import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
+import { signInSchema, type SignInSchema } from "@/lib/schemas/sign-in";
 import { signIn } from "@/lib/auth";
 import { parseZodErrors, createZodError } from "@/lib/utils/form";
 import type { FieldErrors } from "react-hook-form";
 
 type SignInResult =
   | { success: true }
-  | { success: false; errors: FieldErrors<EmailSchema> };
+  | { success: false; errors: FieldErrors<SignInSchema> };
 
 export async function signInAction(formData: FormData): Promise<SignInResult> {
-  const result = emailSchema.safeParse({
+  const result = signInSchema.safeParse({
     email: formData.get("email"),
   });
 

@@ -9,13 +9,13 @@ export type PaginatedResult<T> = {
     total: number;
     page: number;
     perPage: number;
-    pageCount: number;
+    totalPages: number;
   };
 };
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_PER_PAGE = 50;
-const MAX_PER_PAGE = 100;
+export const MAX_PER_PAGE = 100;
 
 export function getPaginationParams(
   params: PaginationParams
@@ -37,6 +37,6 @@ export function calculatePaginationMetadata(
     total,
     page,
     perPage,
-    pageCount: Math.ceil(total / perPage),
+    totalPages: Math.ceil(total / perPage),
   };
 }

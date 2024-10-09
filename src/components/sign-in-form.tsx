@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { emailSchema, type EmailSchema } from "@/lib/schemas/sign-in";
+import { signInSchema, type SignInSchema } from "@/lib/schemas/sign-in";
 import { setFormErrors } from "@/lib/utils/form";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -23,8 +23,8 @@ export function SignInForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<EmailSchema>({
-    resolver: zodResolver(emailSchema),
+  const form = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
     },
