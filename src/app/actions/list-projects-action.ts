@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { listProjects } from "@/features/list-projects/services/list-projects";
+import { listProjects } from "@/domains/projects/services/list-projects";
 import { auth } from "@/lib/auth";
 import { MAX_PER_PAGE } from "@/lib/utils/pagination";
 import { PaginatedResult } from "@/lib/utils/pagination";
