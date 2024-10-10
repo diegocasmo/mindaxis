@@ -23,7 +23,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
 import { useQueryClient } from "@tanstack/react-query";
-import { PROJECTS_LIST_QUERY_KEY } from "@/features/list-projects/hooks/use-projects";
+import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 export function CreateProjectForm() {
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
@@ -109,7 +109,7 @@ export function CreateProjectForm() {
                   type="submit"
                   disabled={isPending || !form.formState.isValid}
                 >
-                  {isPending ? "Creating..." : "Create Project"}
+                  {isPending ? "Creating..." : "Create"}
                 </Button>
               </div>
             </form>

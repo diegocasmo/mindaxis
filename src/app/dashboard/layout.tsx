@@ -2,6 +2,7 @@ import { MainNav } from "@/components/main-nav";
 import { auth } from "@/lib/auth";
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryProvider } from "@/app/dashboard/react-query-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export default async function DashboardLayout({
   children,
@@ -21,6 +22,7 @@ export default async function DashboardLayout({
             </div>
           </main>
         </div>
+        <Toaster />
       </ReactQueryProvider>
     </SessionProvider>
   );

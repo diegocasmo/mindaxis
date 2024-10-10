@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { ProjectList } from "@/features/list-projects/components/project-list";
+import { ProjectList } from "@/domains/projects/components/project-list";
 import { listProjectsAction } from "@/app/actions/list-projects-action";
 
 export default function Dashboard() {
