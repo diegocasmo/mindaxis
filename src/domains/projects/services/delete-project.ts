@@ -10,13 +10,12 @@ export async function deleteProject({
   projectId,
   userId,
 }: DeleteProjectParams): Promise<Project> {
-  // First, check if the user has permission to delete the project
-  const userProject = await prisma.userProject.findUnique({
+  // Check if the user is the owner of the project
+  const userProject = await prisma.userProject.findFirst({
     where: {
-      userId_projectId: {
-        userId,
-        projectId,
-      },
+      userId: userId,
+      projectId: projectId,
+      role: "OWNER",
     },
   });
 
