@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import type { PaginatedResult } from "@/lib/utils/pagination";
 import type { Project } from "@prisma/client";
-import { CreateProjectForm } from "@/components/create-project-form";
+import { CreateProjectForm } from "@/features/list-projects/components/create-project-form";
 import { useProjects } from "@/features/list-projects/hooks/use-projects";
 import { ProjectCard } from "@/features/list-projects/components/project-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
