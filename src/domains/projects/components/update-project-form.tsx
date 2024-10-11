@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import type { Project } from "@prisma/client";
 import { useTransition } from "react";
 import { setFormErrors } from "@/lib/utils/form";
+import { useUpsertProjectsCache } from "@/domains/projects/hooks/use-upsert-projects-cache";
 
 type UpdateProjectFormProps = {
   project: Project;
@@ -29,6 +30,7 @@ export function UpdateProjectForm({
   onCancel,
 }: UpdateProjectFormProps) {
   const [isPending, startTransition] = useTransition();
+  const upsertProjectsCache = useUpsertProjectsCache();
 
   const form = useForm<UpdateProjectSchema>({
     resolver: zodResolver(updateProjectSchema),
@@ -45,6 +47,7 @@ export function UpdateProjectForm({
         const result = await updateProjectAction(project.id, formData);
 
         if (result.success) {
+          upsertProjectsCache(result.data);
           onSuccess(result.data);
         } else {
           setFormErrors(form.setError, result.errors);

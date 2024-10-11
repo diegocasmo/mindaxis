@@ -22,13 +22,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
-import { useQueryClient } from "@tanstack/react-query";
-import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
+import { useUpsertProjectsCache } from "@/domains/projects/hooks/use-upsert-projects-cache";
 
 export function CreateProjectForm() {
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
   const [isPending, startTransition] = useTransition();
-  const queryClient = useQueryClient();
+  const upsertProjectsCache = useUpsertProjectsCache();
 
   const form = useForm<CreateProjectSchema>({
     resolver: zodResolver(createProjectSchema),
@@ -46,10 +45,8 @@ export function CreateProjectForm() {
 
         if (result.success) {
           setIsFormVisible(false);
+          upsertProjectsCache(result.data);
           form.reset();
-          await queryClient.invalidateQueries({
-            queryKey: PROJECTS_LIST_QUERY_KEY,
-          });
         } else {
           setFormErrors(form.setError, result.errors);
         }

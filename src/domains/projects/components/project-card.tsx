@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import type { Project } from "@prisma/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,8 +22,7 @@ type ProjectCardProps = {
   project: Project;
 };
 
-export function ProjectCard({ project: initialProject }: ProjectCardProps) {
-  const [project, setProject] = useState<Project>(initialProject);
+export function ProjectCard({ project }: ProjectCardProps) {
   const [isPending, startTransition] = useTransition();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -52,11 +51,7 @@ export function ProjectCard({ project: initialProject }: ProjectCardProps) {
   };
 
   const handleSuccess = async (nextProject: Project) => {
-    setProject(nextProject);
     setIsFormVisible(false);
-    await queryClient.invalidateQueries({
-      queryKey: PROJECTS_LIST_QUERY_KEY,
-    });
 
     toast({
       title: "Project updated",

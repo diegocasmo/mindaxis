@@ -1,11 +1,8 @@
 import { z } from "zod";
+import { createProjectSchema } from "@/domains/projects/schemas/create-project";
 
 export const updateProjectSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Project name is required")
-    .max(100, "Project name must be 100 characters or less")
-    .transform((v) => v.trim()),
+  name: createProjectSchema.shape.name,
 });
 
 export type UpdateProjectSchema = z.infer<typeof updateProjectSchema>;
