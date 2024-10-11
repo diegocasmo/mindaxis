@@ -57,7 +57,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <Card key={project.id} className="w-full" ref={cardRef}>
+    <Card className="w-full" ref={cardRef}>
       <CardContent className="p-6">
         {isFormVisible ? (
           <UpdateProjectForm
