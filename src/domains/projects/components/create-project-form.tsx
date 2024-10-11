@@ -22,12 +22,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
-import { useUpsertProjectsCache } from "@/domains/projects/hooks/use-upsert-projects-cache";
+import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
 
 export function CreateProjectForm() {
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
   const [isPending, startTransition] = useTransition();
-  const upsertProjectsCache = useUpsertProjectsCache();
+  const updateProjectsCache = useUpdateProjectsCache();
 
   const form = useForm<CreateProjectSchema>({
     resolver: zodResolver(createProjectSchema),
@@ -45,7 +45,7 @@ export function CreateProjectForm() {
 
         if (result.success) {
           setIsFormVisible(false);
-          upsertProjectsCache(result.data);
+          updateProjectsCache("upsert", result.data);
           form.reset();
         } else {
           setFormErrors(form.setError, result.errors);

@@ -12,29 +12,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
-import { useQueryClient } from "@tanstack/react-query";
-import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 import { useToast } from "@/hooks/use-toast";
 import { UpdateProjectForm } from "@/domains/projects/components/update-project-form";
 import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
+import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
 
 type ProjectCardProps = {
   project: Project;
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const [isPending, startTransition] = useTransition();
-  const queryClient = useQueryClient();
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
+  const updateProjectsCache = useUpdateProjectsCache();
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
 
   const handleDelete = () => {
     startTransition(async () => {
       try {
         await deleteProjectAction({ projectId: project.id });
-        await queryClient.invalidateQueries({
-          queryKey: PROJECTS_LIST_QUERY_KEY,
-        });
+        updateProjectsCache("delete", project);
         toast({
           title: "Project deleted",
           description: `${project.name} has been successfully deleted.`,
