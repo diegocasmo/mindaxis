@@ -22,7 +22,8 @@ type ProjectCardProps = {
   project: Project;
 };
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project: initialProject }: ProjectCardProps) {
+  const [project, setProject] = useState<Project>(initialProject);
   const [isPending, startTransition] = useTransition();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -51,6 +52,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   const handleSuccess = async (nextProject: Project) => {
+    setProject(nextProject);
     setIsFormVisible(false);
     await queryClient.invalidateQueries({
       queryKey: PROJECTS_LIST_QUERY_KEY,
