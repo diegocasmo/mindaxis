@@ -12,26 +12,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
-import { useQueryClient } from "@tanstack/react-query";
-import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 import { useToast } from "@/hooks/use-toast";
+import { UpdateProjectForm } from "@/domains/projects/components/update-project-form";
+import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
+import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
 
 type ProjectCardProps = {
   project: Project;
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const [isPending, startTransition] = useTransition();
-  const queryClient = useQueryClient();
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
+  const updateProjectsCache = useUpdateProjectsCache();
+  const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
 
   const handleDelete = () => {
     startTransition(async () => {
       try {
         await deleteProjectAction({ projectId: project.id });
-        await queryClient.invalidateQueries({
-          queryKey: PROJECTS_LIST_QUERY_KEY,
-        });
+        updateProjectsCache("delete", project);
         toast({
           title: "Project deleted",
           description: `${project.name} has been successfully deleted.`,
@@ -47,42 +47,62 @@ export function ProjectCard({ project }: ProjectCardProps) {
     });
   };
 
+  const handleSuccess = async (nextProject: Project) => {
+    setIsFormVisible(false);
+
+    toast({
+      title: "Project updated",
+      description: `${nextProject.name} has been successfully updated.`,
+    });
+  };
+
   return (
-    <Card key={project.id} className="w-full">
+    <Card key={project.id} className="w-full" ref={cardRef}>
       <CardContent className="p-6">
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="font-semibold mb-2">{project.name}</h3>
-            <p className="text-sm text-gray-500">
-              Created: {new Date(project.createdAt).toLocaleString()}
-            </p>
-            <p className="text-sm text-gray-500">
-              Updated:{" "}
-              {project.updatedAt
-                ? new Date(project.updatedAt).toLocaleString()
-                : "N/A"}
-            </p>
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end">
-              <DropdownMenuItem asChild>
-                <Button
-                  onClick={handleDelete}
-                  disabled={isPending}
-                  variant="ghost"
-                  className="w-full justify-start text-destructive hover:text-destructive cursor-pointer"
-                >
-                  {isPending ? "Deleting..." : "Delete"}
+        {isFormVisible ? (
+          <UpdateProjectForm
+            project={project}
+            onCancel={() => setIsFormVisible(false)}
+            onSuccess={handleSuccess}
+          />
+        ) : (
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-semibold mb-2">{project.name}</h3>
+              <p className="text-sm text-gray-500">
+                Created: {new Date(project.createdAt).toLocaleString()}
+              </p>
+              <p className="text-sm text-gray-500">
+                Updated:{" "}
+                {project.updatedAt
+                  ? new Date(project.updatedAt).toLocaleString()
+                  : "N/A"}
+              </p>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <MoreVertical className="h-4 w-4" />
                 </Button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <DropdownMenuItem onSelect={() => setIsFormVisible(true)}>
+                  Update
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Button
+                    onClick={handleDelete}
+                    disabled={isPending}
+                    variant="ghost"
+                    className="w-full justify-start text-destructive hover:text-destructive cursor-pointer"
+                  >
+                    {isPending ? "Deleting..." : "Delete"}
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
