@@ -44,7 +44,10 @@ export function UpdateProjectForm({
       try {
         const formData = new FormData();
         formData.set("name", data.name);
-        const result = await updateProjectAction(project.id, formData);
+        const result = await updateProjectAction({
+          projectId: project.id,
+          formData,
+        });
 
         if (result.success) {
           updateProjectsCache("upsert", result.data);

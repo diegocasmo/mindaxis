@@ -13,10 +13,13 @@ type ActionResult<T> =
   | { success: true; data: T }
   | { success: false; errors: FieldErrors<UpdateProjectSchema> };
 
-export async function updateProjectAction(
-  projectId: string,
-  formData: FormData
-): Promise<ActionResult<Project>> {
+export async function updateProjectAction({
+  projectId,
+  formData,
+}: {
+  projectId: string;
+  formData: FormData;
+}): Promise<ActionResult<Project>> {
   const result = updateProjectSchema.safeParse({
     name: formData.get("name"),
   });

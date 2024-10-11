@@ -19,7 +19,7 @@ export async function deleteProjectAction(
 
   const validatedInput = deleteProjectSchema.parse(input);
 
-  return await deleteProject({
+  return deleteProject({
     projectId: validatedInput.projectId,
     userId: session.user.id,
   });
