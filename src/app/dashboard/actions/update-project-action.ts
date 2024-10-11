@@ -14,7 +14,7 @@ type ActionResult<T> =
   | { success: false; errors: FieldErrors<UpdateProjectSchema> };
 
 export async function updateProjectAction(
-  projectId: string,
+  id: string,
   formData: FormData
 ): Promise<ActionResult<Project>> {
   const result = updateProjectSchema.safeParse({
@@ -32,7 +32,7 @@ export async function updateProjectAction(
     }
 
     const project = await updateProject({
-      projectId: projectId,
+      projectId: id,
       name: result.data.name,
       userId: session.user.id,
     });
