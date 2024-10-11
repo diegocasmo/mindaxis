@@ -8,7 +8,7 @@ import { CreateProjectForm } from "@/domains/projects/components/create-project-
 import { useProjects } from "@/domains/projects/hooks/use-projects";
 import { ProjectCard } from "@/domains/projects/components/project-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Info } from "lucide-react";
 
 type ProjectListProps = {
   initialProjects: PaginatedResult<Project>;
@@ -31,23 +31,37 @@ export function ProjectList({ initialProjects }: ProjectListProps) {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  const projects = data?.pages.flatMap((page) => page.data) || [];
+  const hasProjects = projects.length > 0;
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <CreateProjectForm />
-        {data?.pages
-          .flatMap((page) => page.data)
-          .map((project: Project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+        {projects.map((project: Project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
       </div>
 
+      {!hasProjects && status === "success" && (
+        <Alert className="mt-4">
+          <Info className="h-4 w-4" />
+          <AlertTitle>No projects yet</AlertTitle>
+          <AlertDescription>
+            You haven't created any projects yet. Use the form above to create
+            your first project!
+          </AlertDescription>
+        </Alert>
+      )}
+
       {isFetchingNextPage && (
-        <div className="text-center text-muted-foreground">Loading more...</div>
+        <div className="text-center text-muted-foreground mt-4">
+          Loading more...
+        </div>
       )}
 
       {status === "error" && error instanceof Error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="mt-4">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>
