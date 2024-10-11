@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
-import { deleteProjectAction } from "@/app/actions/delete-project-action";
+import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
 import { useQueryClient } from "@tanstack/react-query";
 import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 import { useToast } from "@/hooks/use-toast";

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { listProjectsAction } from "@/app/actions/list-projects-action";
+import { listProjectsAction } from "@/app/dashboard/actions/list-projects-action";
 import type { PaginatedResult } from "@/lib/utils/pagination";
 import type { Project } from "@prisma/client";
 

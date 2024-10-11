@@ -2,11 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema, type SignInSchema } from "@/lib/schemas/sign-in";
+import {
+  signInSchema,
+  type SignInSchema,
+} from "@/domains/auth/schemas/sign-in";
 import { setFormErrors } from "@/lib/utils/form";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { signInAction } from "@/app/actions/sign-in-action";
+import { signInAction } from "@/app/auth/actions/sign-in-action";
 import {
   Form,
   FormField,

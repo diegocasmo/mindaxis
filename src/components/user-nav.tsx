@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SignOutForm } from "./sign-out-form";
+import { SignOutForm } from "@/domains/auth/components/sign-out-form";
 import { useSession } from "next-auth/react";
 
 export function UserNav() {
