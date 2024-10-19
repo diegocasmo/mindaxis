@@ -69,15 +69,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="flex justify-between items-start">
             <div>
               <h3 className="font-semibold mb-2">{project.name}</h3>
-              <p className="text-sm text-gray-500">
-                Created: {new Date(project.createdAt).toLocaleString()}
-              </p>
-              <p className="text-sm text-gray-500">
-                Updated:{" "}
-                {project.updatedAt
-                  ? new Date(project.updatedAt).toLocaleString()
-                  : "N/A"}
-              </p>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
