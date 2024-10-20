@@ -61,8 +61,8 @@ export function CreateProjectForm() {
   });
 
   return (
-    <Card ref={cardRef} className="w-full">
-      <CardContent className="p-6">
+    <Card ref={cardRef} className="w-full h-[250px]">
+      <CardContent className="p-6 h-full flex flex-col justify-between">
         {!isFormVisible ? (
           <Button
             onClick={() => {
@@ -76,7 +76,10 @@ export function CreateProjectForm() {
           </Button>
         ) : (
           <Form {...form}>
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form
+              onSubmit={onSubmit}
+              className="h-full flex flex-col justify-between"
+            >
               <FormField
                 control={form.control}
                 name="name"

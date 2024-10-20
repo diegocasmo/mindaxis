@@ -23,8 +23,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <Card className="w-full" ref={cardRef}>
-      <CardContent className="p-6">
+    <Card className="w-full h-[250px]" ref={cardRef}>
+      <CardContent className="p-6 h-full flex flex-col justify-between">
         {isFormVisible ? (
           <UpdateProjectForm
             project={project}
@@ -32,14 +32,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
             onSuccess={handleSuccess}
           />
         ) : (
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="font-semibold mb-2">{project.name}</h3>
+          <div className="flex flex-col justify-between h-full">
+            <div className="flex justify-between items-start w-full">
+              <h3 className="font-semibold">{project.name}</h3>
+              <ProjectCardActions
+                project={project}
+                onUpdate={() => setIsFormVisible(true)}
+              />
             </div>
-            <ProjectCardActions
-              project={project}
-              onUpdate={() => setIsFormVisible(true)}
-            />
           </div>
         )}
       </CardContent>
