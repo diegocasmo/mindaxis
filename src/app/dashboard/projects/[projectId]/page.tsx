@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getProjectAction } from "@/app/dashboard/projects/[projectId]/actions/get-project-action";
-import { ProjectDetails } from "@/domains/project/components/project-details";
+import { ProjectBoard } from "@/domains/project/components/project-board";
+import { ProjectHeader } from "@/domains/project/components/project-header";
 
 export default async function ProjectPage({
   params,
@@ -14,9 +15,9 @@ export default async function ProjectPage({
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-6">Project: {project.name}</h1>
-      <ProjectDetails project={project} />
+    <div className="flex flex-col h-[calc(100vh-8rem)] overflow-hidden">
+      <ProjectHeader project={project} />
+      <ProjectBoard />
     </div>
   );
 }
