@@ -9,23 +9,24 @@ type GetProjectParams = {
 export async function getProject({
   projectId,
   userId,
-}: GetProjectParams): Promise<Project> {
-  const project = await prisma.project.findFirst({
-    where: {
-      id: projectId,
-      userProjects: {
-        some: {
-          userId: userId,
-          projectId: projectId,
-          role: "OWNER",
+}: GetProjectParams): Promise<Project | null> {
+  try {
+    const project = await prisma.project.findFirst({
+      where: {
+        id: projectId,
+        userProjects: {
+          some: {
+            userId: userId,
+            projectId: projectId,
+            role: "OWNER",
+          },
         },
       },
-    },
-  });
+    });
 
-  if (!project) {
-    throw new Error("Project not found");
+    return project;
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    throw new Error("An error occurred while fetching the project");
   }
-
-  return project;
 }

@@ -11,7 +11,7 @@ const getProjectSchema = z.object({
 
 export async function getProjectAction(
   input: z.infer<typeof getProjectSchema>
-): Promise<Project> {
+): Promise<Project | null> {
   const session = await auth();
   if (!session?.user?.id) {
     throw new Error("User not authenticated");
