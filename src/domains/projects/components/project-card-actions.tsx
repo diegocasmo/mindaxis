@@ -18,7 +18,8 @@ import {
 import { Settings } from "lucide-react";
 import { deleteProjectAction } from "@/app/dashboard/projects/actions/delete-project-action";
 import { useToast } from "@/hooks/use-toast";
-import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
+import { useQueryClient } from "@tanstack/react-query";
+import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 interface ProjectCardActionsProps {
   project: Project;
@@ -31,14 +32,17 @@ export function ProjectCardActions({
 }: ProjectCardActionsProps) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
-  const updateProjectsCache = useUpdateProjectsCache();
+  const queryClient = useQueryClient();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
 
   const handleDelete = () => {
     startTransition(async () => {
       try {
         await deleteProjectAction({ projectId: project.id });
-        updateProjectsCache("delete", project);
+
+        await queryClient.invalidateQueries({
+          queryKey: PROJECTS_LIST_QUERY_KEY,
+        });
         toast({
           title: "Project deleted",
           description: `${project.name} has been successfully deleted.`,

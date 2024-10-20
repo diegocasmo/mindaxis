@@ -16,7 +16,8 @@ import { Button } from "@/components/ui/button";
 import type { Project } from "@prisma/client";
 import { useTransition } from "react";
 import { setFormErrors } from "@/lib/utils/form";
-import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
+import { useQueryClient } from "@tanstack/react-query";
+import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 type UpdateProjectFormProps = {
   project: Project;
@@ -30,7 +31,7 @@ export function UpdateProjectForm({
   onCancel,
 }: UpdateProjectFormProps) {
   const [isPending, startTransition] = useTransition();
-  const updateProjectsCache = useUpdateProjectsCache();
+  const queryClient = useQueryClient();
 
   const form = useForm<UpdateProjectSchema>({
     resolver: zodResolver(updateProjectSchema),
@@ -50,7 +51,9 @@ export function UpdateProjectForm({
         });
 
         if (result.success) {
-          updateProjectsCache("upsert", result.data);
+          await queryClient.invalidateQueries({
+            queryKey: PROJECTS_LIST_QUERY_KEY,
+          });
           onSuccess(result.data);
         } else {
           setFormErrors(form.setError, result.errors);

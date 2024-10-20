@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import {
   createProjectSchema,
   type CreateProjectSchema,
@@ -36,6 +37,8 @@ export async function createProjectAction(
       name: result.data.name,
       userId: session.user.id,
     });
+
+    revalidatePath("/dashboard");
 
     return { success: true, data: project };
   } catch (error) {

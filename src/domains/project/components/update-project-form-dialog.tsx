@@ -26,6 +26,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 type UpdateProjectFormDialogProps = {
   project: Project;
@@ -40,6 +42,7 @@ export function UpdateProjectFormDialog({
 }: UpdateProjectFormDialogProps) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const form = useForm<UpdateProjectSchema>({
     resolver: zodResolver(updateProjectSchema),
@@ -59,6 +62,9 @@ export function UpdateProjectFormDialog({
         });
 
         if (result.success) {
+          await queryClient.invalidateQueries({
+            queryKey: PROJECTS_LIST_QUERY_KEY,
+          });
           toast({
             title: "Project updated",
             description: `${result.data.name} has been successfully updated.`,

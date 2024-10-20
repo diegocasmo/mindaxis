@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 type DeleteProjectDialogProps = {
   project: Project;
@@ -27,6 +29,7 @@ export function DeleteProjectDialog({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleDelete = () => {
     startTransition(async () => {
@@ -35,6 +38,9 @@ export function DeleteProjectDialog({
         toast({
           title: "Project deleted",
           description: `${project.name} has been successfully deleted.`,
+        });
+        await queryClient.invalidateQueries({
+          queryKey: PROJECTS_LIST_QUERY_KEY,
         });
         router.push("/dashboard");
       } catch (error) {
