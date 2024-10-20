@@ -64,8 +64,13 @@ export function ProjectCardActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
-          <DropdownMenuItem onSelect={onUpdate}>Update</DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setIsDeleteDialogOpen(true)}>
+          <DropdownMenuItem className="cursor-pointer" onSelect={onUpdate}>
+            Update
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onSelect={() => setIsDeleteDialogOpen(true)}
+          >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

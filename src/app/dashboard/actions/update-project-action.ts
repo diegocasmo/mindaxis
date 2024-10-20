@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { updateProjectSchema } from "@/domains/projects/schemas/update-project";
 import type { UpdateProjectSchema } from "@/domains/projects/schemas/update-project";
 import { updateProject } from "@/domains/projects/services/update-project";
@@ -39,6 +40,9 @@ export async function updateProjectAction({
       name: result.data.name,
       userId: session.user.id,
     });
+
+    revalidatePath("/dashboard");
+    revalidatePath(`/dashboard/projects/${projectId}`);
 
     return { success: true, data: project };
   } catch (error) {

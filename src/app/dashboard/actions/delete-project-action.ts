@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { deleteProject } from "@/domains/projects/services/delete-project";
 import { auth } from "@/lib/auth";
@@ -19,8 +20,13 @@ export async function deleteProjectAction(
 
   const validatedInput = deleteProjectSchema.parse(input);
 
-  return deleteProject({
+  const deletedProject = deleteProject({
     projectId: validatedInput.projectId,
     userId: session.user.id,
   });
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/dashboard/projects/${validatedInput.projectId}`);
+
+  return deletedProject;
 }
