@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { listProjectsAction } from "@/app/dashboard/actions/list-projects-action";
+import { fetchProjectsAction } from "@/app/dashboard/actions/fetch-projects-action";
 import type { PaginatedResult } from "@/lib/utils/pagination";
 import type { Project } from "@prisma/client";
 
@@ -16,7 +16,7 @@ export function useProjects(options: UseProjectsOptions = {}) {
   return useInfiniteQuery({
     queryKey: PROJECTS_LIST_QUERY_KEY,
     queryFn: async ({ pageParam = 1 }) =>
-      listProjectsAction({
+      fetchProjectsAction({
         page: typeof pageParam === "number" ? pageParam : 1,
         perPage,
       }),

@@ -7,14 +7,14 @@ import {
   calculatePaginationMetadata,
 } from "@/lib/utils/pagination";
 
-type ListProjectsParams = PaginationParams & {
+type FetchProjectsParams = PaginationParams & {
   userId: string;
 };
 
-export async function listProjects({
+export async function fetchProjects({
   userId,
   ...paginationParams
-}: ListProjectsParams): Promise<PaginatedResult<Project>> {
+}: FetchProjectsParams): Promise<PaginatedResult<Project>> {
   const { page, perPage } = getPaginationParams(paginationParams);
 
   const [projects, total] = await prisma.$transaction([
