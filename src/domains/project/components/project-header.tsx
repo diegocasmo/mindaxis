@@ -59,6 +59,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       <DeleteProjectDialog
         project={project}
         isOpen={isDeleteDialogOpen}
+        redirectPath="/dashboard"
         onClose={() => setIsDeleteDialogOpen(false)}
       />
     </div>

@@ -19,12 +19,14 @@ type DeleteProjectDialogProps = {
   project: Project;
   isOpen: boolean;
   onClose: () => void;
+  redirectPath?: string;
 };
 
 export function DeleteProjectDialog({
   project,
   isOpen,
   onClose,
+  redirectPath,
 }: DeleteProjectDialogProps) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
@@ -42,7 +44,9 @@ export function DeleteProjectDialog({
         await queryClient.invalidateQueries({
           queryKey: PROJECTS_LIST_QUERY_KEY,
         });
-        router.push("/dashboard");
+        if (redirectPath) {
+          router.push(redirectPath);
+        }
       } catch (error) {
         console.error("Project deletion error:", error);
         toast({
