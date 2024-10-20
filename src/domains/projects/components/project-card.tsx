@@ -46,7 +46,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           />
         ) : (
           <div className="flex flex-col justify-between h-full">
-            <div className="flex justify-between items-start w-full">
+            <div className="flex justify-between items-center w-full">
               <h3 className="font-semibold">{project.name}</h3>
               <div
                 className="project-card-actions"

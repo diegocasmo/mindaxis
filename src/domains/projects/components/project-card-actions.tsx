@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MoreVertical } from "lucide-react";
+import { Settings } from "lucide-react";
 import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
 import { useToast } from "@/hooks/use-toast";
 import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
@@ -60,7 +60,7 @@ export function ProjectCardActions({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
-            <MoreVertical className="h-4 w-4" />
+            <Settings className="w-4 h-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
