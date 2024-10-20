@@ -5,7 +5,7 @@ import {
   createProjectSchema,
   type CreateProjectSchema,
 } from "@/domains/projects/schemas/create-project";
-import { createProject } from "@/domains/projects/services/create-project";
+import { createProject } from "@/domains/project/services/create-project";
 import { parseZodErrors, createZodError } from "@/lib/utils/form";
 import type { FieldErrors } from "react-hook-form";
 import { auth } from "@/lib/auth";

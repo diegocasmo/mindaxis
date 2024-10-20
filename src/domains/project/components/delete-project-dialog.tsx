@@ -17,14 +17,12 @@ import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 type DeleteProjectDialogProps = {
   project: Project;
-  isOpen: boolean;
   onClose: () => void;
   redirectPath?: string;
 };
 
 export function DeleteProjectDialog({
   project,
-  isOpen,
   onClose,
   redirectPath,
 }: DeleteProjectDialogProps) {
@@ -59,7 +57,7 @@ export function DeleteProjectDialog({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete Project</DialogTitle>

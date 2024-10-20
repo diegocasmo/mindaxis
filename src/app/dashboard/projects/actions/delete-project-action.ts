@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { deleteProject } from "@/domains/projects/services/delete-project";
+import { deleteProject } from "@/domains/project/services/delete-project";
 import { auth } from "@/lib/auth";
 import type { Project } from "@prisma/client";
 

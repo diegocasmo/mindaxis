@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { updateProjectSchema } from "@/domains/projects/schemas/update-project";
 import type { UpdateProjectSchema } from "@/domains/projects/schemas/update-project";
-import { updateProject } from "@/domains/projects/services/update-project";
+import { updateProject } from "@/domains/project/services/update-project";
 import { parseZodErrors, createZodError } from "@/lib/utils/form";
 import type { FieldErrors } from "react-hook-form";
 import { auth } from "@/lib/auth";

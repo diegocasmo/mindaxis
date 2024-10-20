@@ -31,13 +31,11 @@ import { PROJECTS_LIST_QUERY_KEY } from "@/domains/projects/hooks/use-projects";
 
 type UpdateProjectFormDialogProps = {
   project: Project;
-  isOpen: boolean;
   onClose: () => void;
 };
 
 export function UpdateProjectFormDialog({
   project,
-  isOpen,
   onClose,
 }: UpdateProjectFormDialogProps) {
   const [isPending, startTransition] = useTransition();
@@ -85,7 +83,7 @@ export function UpdateProjectFormDialog({
   });
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update Project</DialogTitle>
