@@ -61,7 +61,7 @@ export function CreateProjectForm() {
   });
 
   return (
-    <Card ref={cardRef} className="w-full h-[250px]">
+    <Card ref={cardRef} className="w-full h-[180px]">
       <CardContent className="p-6 h-full flex flex-col justify-between">
         {!isFormVisible ? (
           <Button

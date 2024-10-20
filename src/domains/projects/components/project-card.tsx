@@ -23,7 +23,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <Card className="w-full h-[250px]" ref={cardRef}>
+    <Card className="w-full h-[180px]" ref={cardRef}>
       <CardContent className="p-6 h-full flex flex-col justify-between">
         {isFormVisible ? (
           <UpdateProjectForm
