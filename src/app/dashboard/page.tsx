@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { ProjectList } from "@/domains/projects/components/project-list";
-import { fetchProjectsAction } from "@/app/dashboard/actions/fetch-projects-action";
+import { fetchProjectsAction } from "@/app/dashboard/projects/actions/fetch-projects-action";
 
 export default async function Dashboard() {
   const initialProjects = await fetchProjectsAction({ page: 1, perPage: 20 });

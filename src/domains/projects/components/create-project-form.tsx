@@ -8,7 +8,7 @@ import {
 } from "@/domains/projects/schemas/create-project";
 import { setFormErrors } from "@/lib/utils/form";
 import { useTransition } from "react";
-import { createProjectAction } from "@/app/dashboard/actions/create-project-action";
+import { createProjectAction } from "@/app/dashboard/projects/actions/create-project-action";
 import {
   Form,
   FormField,

@@ -6,7 +6,7 @@ import {
   updateProjectSchema,
   UpdateProjectSchema,
 } from "@/domains/projects/schemas/update-project";
-import { updateProjectAction } from "@/app/dashboard/actions/update-project-action";
+import { updateProjectAction } from "@/app/dashboard/projects/actions/update-project-action";
 import { Project } from "@prisma/client";
 import {
   Dialog,

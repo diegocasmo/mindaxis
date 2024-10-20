@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Settings } from "lucide-react";
-import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
+import { deleteProjectAction } from "@/app/dashboard/projects/actions/delete-project-action";
 import { useToast } from "@/hooks/use-toast";
 import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
 

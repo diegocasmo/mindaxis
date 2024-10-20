@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateProjectSchema } from "@/domains/projects/schemas/update-project";
 import type { UpdateProjectSchema } from "@/domains/projects/schemas/update-project";
-import { updateProjectAction } from "@/app/dashboard/actions/update-project-action";
+import { updateProjectAction } from "@/app/dashboard/projects/actions/update-project-action";
 import {
   Form,
   FormField,

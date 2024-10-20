@@ -1,7 +1,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Project } from "@prisma/client";
-import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
+import { deleteProjectAction } from "@/app/dashboard/projects/actions/delete-project-action";
 import {
   Dialog,
   DialogContent,
