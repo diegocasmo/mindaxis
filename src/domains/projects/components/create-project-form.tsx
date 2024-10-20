@@ -72,7 +72,7 @@ export function CreateProjectForm() {
             className="w-full h-full flex items-center justify-center space-x-2"
           >
             <Plus className="w-5 h-5" />
-            <span>Create Project</span>
+            <span>New</span>
           </Button>
         ) : (
           <Form {...form}>
@@ -85,10 +85,10 @@ export function CreateProjectForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Project Name</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter project name"
+                        placeholder="Project name..."
                         autoFocus
                         {...field}
                       />
