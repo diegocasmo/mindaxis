@@ -69,10 +69,10 @@ export function CreateProjectForm() {
               setIsFormVisible(true);
               form.reset();
             }}
-            className="w-full h-full flex flex-col items-center justify-center"
+            className="w-full h-full flex items-center justify-center space-x-2"
           >
-            <Plus className="w-8 h-8 mb-2" />
-            <span>Create New Project</span>
+            <Plus className="w-5 h-5" />
+            <span>Create Project</span>
           </Button>
         ) : (
           <Form {...form}>
