@@ -1,21 +1,9 @@
-"use client";
-
-import { useTransition } from "react";
 import type { Project } from "@prisma/client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreVertical } from "lucide-react";
-import { deleteProjectAction } from "@/app/dashboard/actions/delete-project-action";
 import { useToast } from "@/hooks/use-toast";
 import { UpdateProjectForm } from "@/domains/projects/components/update-project-form";
 import { useFormVisibility } from "@/lib/hooks/use-form-visibility";
-import { useUpdateProjectsCache } from "@/domains/projects/hooks/use-update-projects-cache";
+import { ProjectCardActions } from "@/domains/projects/components/project-card-actions";
 
 type ProjectCardProps = {
   project: Project;
@@ -23,29 +11,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const { toast } = useToast();
-  const [isPending, startTransition] = useTransition();
-  const updateProjectsCache = useUpdateProjectsCache();
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
-
-  const handleDelete = () => {
-    startTransition(async () => {
-      try {
-        await deleteProjectAction({ projectId: project.id });
-        updateProjectsCache("delete", project);
-        toast({
-          title: "Project deleted",
-          description: `${project.name} has been successfully deleted.`,
-        });
-      } catch (error) {
-        console.error("Project deletion error:", error);
-        toast({
-          title: "Error",
-          description: "Failed to delete the project. Please try again.",
-          variant: "destructive",
-        });
-      }
-    });
-  };
 
   const handleSuccess = async (nextProject: Project) => {
     setIsFormVisible(false);
@@ -70,28 +36,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <div>
               <h3 className="font-semibold mb-2">{project.name}</h3>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end">
-                <DropdownMenuItem onSelect={() => setIsFormVisible(true)}>
-                  Update
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Button
-                    onClick={handleDelete}
-                    disabled={isPending}
-                    variant="ghost"
-                    className="w-full justify-start text-destructive hover:text-destructive cursor-pointer"
-                  >
-                    {isPending ? "Deleting..." : "Delete"}
-                  </Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <ProjectCardActions
+              project={project}
+              onUpdate={() => setIsFormVisible(true)}
+            />
           </div>
         )}
       </CardContent>
