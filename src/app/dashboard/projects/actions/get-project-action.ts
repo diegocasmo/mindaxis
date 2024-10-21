@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { getProject } from "@/domains/project/services/get-project";
 import { auth } from "@/lib/auth";
-import type { Project } from "@prisma/client";
+import { ProjectWithLists } from "@/types";
 
 const getProjectSchema = z.object({
   projectId: z.string().cuid(),
@@ -11,7 +11,7 @@ const getProjectSchema = z.object({
 
 export async function getProjectAction(
   input: z.infer<typeof getProjectSchema>
-): Promise<Project | null> {
+): Promise<ProjectWithLists | null> {
   const session = await auth();
   if (!session?.user?.id) {
     throw new Error("User not authenticated");

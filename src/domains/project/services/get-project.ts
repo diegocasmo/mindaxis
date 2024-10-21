@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import type { Project } from "@prisma/client";
+import { ProjectWithLists } from "@/types";
 
 type GetProjectParams = {
   projectId: string;
@@ -9,9 +9,9 @@ type GetProjectParams = {
 export async function getProject({
   projectId,
   userId,
-}: GetProjectParams): Promise<Project | null> {
+}: GetProjectParams): Promise<ProjectWithLists | null> {
   try {
-    const project = await prisma.project.findFirst({
+    return await prisma.project.findFirst({
       where: {
         id: projectId,
         userProjects: {
@@ -22,9 +22,10 @@ export async function getProject({
           },
         },
       },
+      include: {
+        lists: true,
+      },
     });
-
-    return project;
   } catch (error) {
     console.error("Error fetching project:", error);
     throw new Error("An error occurred while fetching the project");

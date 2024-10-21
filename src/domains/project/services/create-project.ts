@@ -1,4 +1,4 @@
-import type { Project } from "@prisma/client";
+import type { Project, ListType } from "@prisma/client";
 import { UserProjectRole } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
@@ -14,27 +14,30 @@ export async function createProject({
   try {
     // Find the user's organization
     const userOrganization = await prisma.userOrganization.findFirstOrThrow({
-      where: { userId },
+      where: { userId, role: "OWNER" },
       select: { organizationId: true },
     });
 
-    // Create the project
-    return prisma.$transaction(async (tx) => {
-      const project = await tx.project.create({
-        data: {
-          name,
-          organizationId: userOrganization.organizationId,
-          userProjects: {
-            create: {
-              userId,
-              role: UserProjectRole.OWNER,
-            },
+    const listTypes: ListType[] = ["ICEBOX", "TODO", "DOING", "DONE"];
+
+    // Create the project and automatically add lists
+    const project = await prisma.project.create({
+      data: {
+        name,
+        organizationId: userOrganization.organizationId,
+        userProjects: {
+          create: {
+            userId,
+            role: UserProjectRole.OWNER,
           },
         },
-      });
-
-      return project;
+        lists: {
+          create: listTypes.map((type) => ({ type })),
+        },
+      },
     });
+
+    return project;
   } catch (error) {
     console.error("Error creating project:", error);
     throw error;
