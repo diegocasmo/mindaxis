@@ -9,8 +9,8 @@ type ProjectCardProps = {
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  // Prevent navigation if the click target is the dropdown or its children
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleCardClick = (e: MouseEvent<HTMLDivElement>) => {
+    // Only prevent default if clicking on the project actions
     if ((e.target as HTMLElement).closest(".project-card-actions")) {
       e.preventDefault();
     }
@@ -18,14 +18,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <Link href={`/dashboard/projects/${project.id}`} className="block" passHref>
-      <Card className="`w-full h-[180px] cursor-pointer" onClick={handleClick}>
+      <Card
+        className="w-full h-[180px] cursor-pointer"
+        onClick={handleCardClick}
+      >
         <CardContent className="p-6 h-full flex flex-col justify-between">
           <div className="flex flex-col justify-between h-full">
             <div className="flex justify-between items-center w-full">
               <h3 className="font-semibold">{project.name}</h3>
               <div
                 className="project-card-actions"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => e.stopPropagation()}
               >
                 <ProjectActions project={project} />
               </div>
