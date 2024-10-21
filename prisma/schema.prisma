@@ -71,6 +71,7 @@ model Project {
 
   organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userProjects UserProject[]
+  List         List[]
 
   @@unique([name, organizationId])
   @@map("projects")
@@ -93,10 +94,31 @@ model UserProject {
   @@map("user_projects")
 }
 
+model List {
+  id        String   @id @default(cuid())
+  type      ListType
+  projectId String   @map("project_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([type, projectId])
+  @@index([projectId])
+  @@map("lists")
+}
+
 enum UserOrganizationRole {
   OWNER
 }
 
 enum UserProjectRole {
   OWNER
+}
+
+enum ListType {
+  ICEBOX
+  TODO
+  DOING
+  DONE
 }
