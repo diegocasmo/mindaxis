@@ -6,9 +6,10 @@ import { ProjectHeader } from "@/domains/project/components/project-header";
 export default async function ProjectPage({
   params,
 }: {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }) {
-  const project = await getProjectAction({ projectId: params.projectId });
+  const projectId = (await params).projectId;
+  const project = await getProjectAction({ projectId });
 
   if (!project) {
     notFound();

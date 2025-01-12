@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createProjectSchema,
@@ -29,6 +30,7 @@ export function CreateProjectForm() {
   const { isFormVisible, setIsFormVisible, cardRef } = useFormVisibility();
   const [isPending, startTransition] = useTransition();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const form = useForm<CreateProjectSchema>({
     resolver: zodResolver(createProjectSchema),
@@ -50,6 +52,7 @@ export function CreateProjectForm() {
             queryKey: PROJECTS_LIST_QUERY_KEY,
           });
           form.reset();
+          router.push(`/dashboard/projects/${result.data.id}`);
         } else {
           setFormErrors(form.setError, result.errors);
         }
