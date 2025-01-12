@@ -18,7 +18,11 @@ export async function createProject({
       select: { organizationId: true },
     });
 
-    const listTypes: ListType[] = ["TODO", "DOING", "DONE"];
+    const lists: { name: string; type: ListType }[] = [
+      { name: "To-do", type: "TODO" },
+      { name: "Doing", type: "DOING" },
+      { name: "Done", type: "DONE" },
+    ];
 
     // Create the project and automatically add lists
     const project = await prisma.project.create({
@@ -32,7 +36,7 @@ export async function createProject({
           },
         },
         lists: {
-          create: listTypes.map((type) => ({ type })),
+          create: lists,
         },
       },
     });

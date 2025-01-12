@@ -7,12 +7,9 @@ type ProjectListProps = {
 
 export function ProjectList({ list }: ProjectListProps) {
   return (
-    <Card
-      key={list.id}
-      className="bg-background rounded-lg shadow-sm p-4 w-80 flex-shrink-0"
-    >
+    <Card className="bg-background rounded-lg shadow-sm p-4 w-80 flex-shrink-0">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{list.type}</CardTitle>
+        <CardTitle className="text-lg font-semibold">{list.name}</CardTitle>
       </CardHeader>
       <CardContent></CardContent>
     </Card>
