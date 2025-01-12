@@ -18,7 +18,7 @@ export default async function ProjectPage({
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] overflow-hidden">
       <ProjectHeader project={project} />
-      <ProjectBoard />
+      <ProjectBoard project={project} />
     </div>
   );
 }
