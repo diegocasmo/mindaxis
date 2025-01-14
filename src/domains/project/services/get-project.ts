@@ -23,7 +23,11 @@ export async function getProject({
         },
       },
       include: {
-        lists: true,
+        lists: {
+          where: {
+            archivedAt: null,
+          },
+        },
       },
     });
   } catch (error) {
