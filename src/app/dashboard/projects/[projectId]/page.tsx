@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProjectAction } from "@/app/dashboard/projects/actions/get-project-action";
+import { getProjectAction } from "@/app/dashboard/projects/[projectId]/actions/get-project-action";
 import { ProjectBoard } from "@/domains/project/components/project-board";
 import { ProjectHeader } from "@/domains/project/components/project-header";
 
