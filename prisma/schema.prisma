@@ -95,12 +95,13 @@ model UserProject {
 }
 
 model List {
-  id        String   @id @default(cuid())
-  name      String
-  type      ListType
-  projectId String   @map("project_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id         String    @id @default(cuid())
+  name       String
+  type       ListType
+  projectId  String    @map("project_id")
+  archivedAt DateTime? @map("archived_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
