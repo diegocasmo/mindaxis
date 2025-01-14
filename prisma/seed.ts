@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import { findOrCreateDefaultOrganization } from "@/lib/services/find-or-create-default-organization";
-import { createProject } from "@/domains/project/create-project";
+import { createProject } from "@/domains/project/services/create-project";
 
 const prisma = new PrismaClient();
 
