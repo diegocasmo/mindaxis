@@ -27,6 +27,10 @@ export async function getProject({
           where: {
             archivedAt: null,
           },
+          orderBy: [
+            { type: "asc" }, // Enum sorting based on schema declaration order
+            { createdAt: "asc" },
+          ],
         },
       },
     });
