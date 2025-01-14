@@ -107,6 +107,7 @@ model List {
 
   @@unique([type, projectId, name])
   @@index([projectId])
+  @@index([archivedAt])
   @@map("lists")
 }
 
